@@ -1,0 +1,54 @@
+<% spend = Spending.new %>
+<p>Yesterday's Spend:</p>
+<div>
+	<table cellspacing="0" cellpadding="0" dir="ltr" border="1" style="table-layout:fixed;font-size:13px;font-family:arial,sans,sans-serif;border-collapse:collapse;border:1px solid rgb(204,204,204)">
+		<colgroup>
+			<col width="174"><col width="135">
+		</colgroup>
+		<tbody>
+			<% total = 0 %>
+			<% spend.transactions_yesterday.each do |t| %>
+			<tr style="height:21px">
+				<td style="padding:2px 3px;font-size:110%;white-space:nowrap;vertical-align:bottom">
+					<%= t['description'] %>
+				</td>
+				<td style="padding:2px 3px;font-size:110%;white-space:nowrap;vertical-align:bottom">
+					$<%= t['amounts']['amount']/10000.00 %>
+				</td>
+			</tr>
+			<% total += t['amounts']['amount'] %>
+			<% end %>
+			<tr style="height:21px">
+				<td style="padding:2px 3px;font-size:110%;white-space:nowrap;vertical-align:bottom">
+					<b>TOTAL</b>
+				</td>
+				<td style="padding:2px 3px;font-size:110%;white-space:nowrap;vertical-align:bottom">
+					<b>$<%= total/10000.00 %></b>
+				</td>
+			</tr>
+			<tr style="height:21px">
+				<td style="padding:2px 3px;font-size:110%;white-space:nowrap;vertical-align:bottom">
+					<b>TOTAL THIS MONTH</b>
+				</td>
+				<td style="padding:2px 3px;font-size:110%;white-space:nowrap;vertical-align:bottom">
+					<% s = 0 %>
+					<% spend.transactions_json["transactions"].each do |t| %>
+						<% if t['times']['when_recorded_local'].include?(DateTime.now.strftime('%Y-%m')) && t['bookkeeping_type'] == 'debit' %>
+							<% s += t['amounts']['amount'] %>
+						<% end %>
+					<% end %>
+					<b>$<%= s/10000.00 %></b>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<p>April Spend:</p>
+	<% u = 0 %>
+	<% spend.transactions_json["transactions"].each do |t| %>
+		<% if t['times']['when_recorded_local'].include?(DateTime.new(DateTime.now.year,(DateTime.now.month - 1)).strftime('%Y-%m')) && t['bookkeeping_type'] == 'debit' %>
+			<% u += t['amounts']['amount'] %>
+		<% end %>
+	<% end %>
+<p><b>$<%= u/10000.00 %></b></p>
