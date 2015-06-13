@@ -12,7 +12,7 @@ class Spending
     
     @balance_json = get("#{ENV['S_URL']}/account/balances",@session)
     @transactions_json = get("#{ENV['S_URL']}/transactions/data",@session)
-    @goals_json = get("#{ENV['S_URL']}/goals/data",@session)
+    #@goals_json = get("#{ENV['S_URL']}/goals/data",@session)
 
     @transactions_yesterday = days_ago(1)
   end    

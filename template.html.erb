@@ -52,3 +52,10 @@
 		<% end %>
 	<% end %>
 <p><b>$<%= u/10000.00 %></b></p>
+
+<p>Safe to Spend:</p>
+	<% if spend.balance_json["safe_to_spend"] < 0 %>
+		<p style='color:red'><b>-$<%= spend.balance_json["safe_to_spend"]/-10000.00 %></b></p>
+	<% else %>
+		<p><b>$<%= spend.balance_json["safe_to_spend"]/10000.00 %></b></p>
+	<% end %>
