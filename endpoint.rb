@@ -10,7 +10,7 @@ class Spending
     @sign_in = URI("#{ENV['S_URL']}/signin")
     @session = sign_in
     
-    @balance_json = get("#{ENV['S_URL']}/account/balances",@session)
+    @balance_json = get("#{ENV['S_URL']}/api/account/balances",@session)
     @transactions_json = get("#{ENV['S_URL']}/transactions/data",@session)
     #@goals_json = get("#{ENV['S_URL']}/goals/data",@session)
 
